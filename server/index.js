@@ -1,7 +1,8 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import connectDB from './config/db.js';
 import authRoutes from './routes/auth.js';
 import interviewRoutes from './routes/interviews.js';
 
@@ -20,27 +21,23 @@ app.use('/api/interviews', interviewRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+  res.status(200).json({ 
+    status: 'ok',
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
-// MongoDB connection (commented out for demo purposes)
-/*
-mongoose.connect(process.env.MONGODB_URI)
+// Connect to MongoDB and start server
+connectDB()
   .then(() => {
-    console.log('Connected to MongoDB');
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.error('MongoDB connection error:', error);
+    console.error('Failed to start server:', error);
+    process.exit(1);
   });
-*/
-
-// For demo purposes, we'll just start the server without MongoDB
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
