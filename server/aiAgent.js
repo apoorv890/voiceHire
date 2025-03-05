@@ -22,7 +22,11 @@ async function createAccessToken(req,res) {
 
     const token = await at.toJwt();
     console.log('access token', token);
-    return token;
+    const body = {
+      token,
+      room: roomName
+    }
+    return res.json(body);
 }
 
 export { createAccessToken };

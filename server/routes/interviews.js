@@ -49,6 +49,6 @@ router.patch('/:id/status', auth, updateStatus);
 // Delete interview
 router.delete('/:id', auth, deleteInterview);
 
-router.get("/ai_token/:name",createAccessToken)
+router.get("/ai-token/:name",createAccessToken)
 
 export default router;
