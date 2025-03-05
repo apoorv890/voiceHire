@@ -9,7 +9,7 @@ import {
   updateStatus,
   deleteInterview
 } from '../controllers/interviewController.js';
-
+import {createAccessToken} from '../aiAgent.js';
 const router = express.Router();
 
 // Middleware to authenticate token
@@ -48,5 +48,7 @@ router.patch('/:id/status', auth, updateStatus);
 
 // Delete interview
 router.delete('/:id', auth, deleteInterview);
+
+router.get("/ai_token/:name",createAccessToken)
 
 export default router;
