@@ -1,0 +1,13 @@
+{
+  "name": "voice-hire-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for Voice Hire application",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node migrate-to-atlas.js"
+  },
+  "dependencies": {
+    "mongodb": "^5.0.0",
+    "dotenv": "^16.0.0"
+  }
+}
