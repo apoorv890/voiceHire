@@ -18,47 +18,7 @@ const InterviewScheduler = () => {
   const [processingStatus, setProcessingStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
   const [interviewData, setInterviewData] = useState<InterviewData | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const startInterview = () => {
-    setIsRecording(true);
-    
-    // Simulate AI voice interview process
-    setTimeout(() => {
-      setIsRecording(false);
-      setProcessingStatus('processing');
-      
-      // Simulate processing time
-      setTimeout(() => {
-        // Simulate successful interview data extraction
-        const mockInterviewData = {
-          candidateName: 'Alex Johnson',
-          candidateEmail: 'alex.johnson@example.com',
-          company: 'TechCorp Inc.',
-          interviewDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days from now
-        };
-        
-        setInterviewData(mockInterviewData);
-        setProcessingStatus('success');
-        
-        // Simulate API call to save interview data
-        const saveInterview = async () => {
-          try {
-            const token = localStorage.getItem('token');
-            await axios.post(`${API_URL}/api/interviews`, mockInterviewData, {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            });
-          } catch (err) {
-            console.error('Error saving interview data:', err);
-            // We don't set error here since we're just simulating the API call
-          }
-        };
-        
-        saveInterview();
-      }, 3000);
-    }, 5000);
-  };
+  const [showLiveKit, setShowLiveKit] = useState(false);
 
   const handleConfirm = () => {
     // Simulate Google Calendar integration
@@ -72,6 +32,7 @@ const InterviewScheduler = () => {
     setProcessingStatus('idle');
     setInterviewData(null);
     setErrorMessage('');
+    setShowLiveKit(false);
   };
 
   const formatDate = (dateString: string) => {
@@ -142,8 +103,8 @@ const InterviewScheduler = () => {
                 </div>
               ) : (
                 <button
-                  onClick={startInterview}
-                  className="btn-primary"
+                  onClick={() => setShowLiveKit(true)}
+                  className="bg-blue-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-600 transition"
                 >
                   Start Voice Call
                 </button>
@@ -157,6 +118,21 @@ const InterviewScheduler = () => {
                   Cancel
                 </button>
               )}
+            </div>
+          )}
+          
+          {showLiveKit && (
+            <div className="w-full flex justify-center mt-5">
+              <iframe
+                src="https://agents-playground.livekit.io/#cam=1&mic=1&video=1&audio=1&chat=1&theme_color=cyan"
+                width="90%"
+                height="600px"
+                style={{
+                  border: "2px solid #ddd",
+                  borderRadius: "10px",
+                  boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                }}
+              />
             </div>
           )}
           

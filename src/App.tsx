@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import InterviewScheduler from './pages/InterviewScheduler';
 import NotFound from './pages/NotFound';
 
+
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, loading } = useAuth();
 

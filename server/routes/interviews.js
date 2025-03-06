@@ -51,4 +51,6 @@ router.delete('/:id', auth, deleteInterview);
 
 router.get("/ai-token/:name",createAccessToken)
 
+router.get('/token/:name', createAccessToken);
+
 export default router;
