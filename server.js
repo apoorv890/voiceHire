@@ -2,11 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import interviewRoutes from "./routes/interviews.js";
-import path from "path";
-import { fileURLToPath } from "url";
 
 dotenv.config();
 
