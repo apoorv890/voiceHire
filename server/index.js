@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = parseInt(process.env.PORT || "8000", 10);
 
 // Middleware
 app.use(cors());
@@ -43,8 +43,9 @@ app.get("*", (req, res) => {
 // Connect to MongoDB and start server
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on port ${PORT}`);
+      console.log(`Server address: ${server.address().address}:${server.address().port}`);
     });
   })
   .catch((error) => {
